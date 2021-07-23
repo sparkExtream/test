@@ -1,0 +1,43 @@
+<section class="text-gray-600 body-font">
+  <div class="container px-5 mx-auto">
+    <div class="flex flex-col text-center w-full m-4">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font text-gray-900">Remove Property</h1>
+    </div>
+    <div class="w-full mx-auto overflow-auto">
+      <table class="table-auto w-full text-left whitespace-no-wrap">
+        <thead>
+          <tr>
+            <th
+              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+              Name</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Size</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Description
+            </th>
+            <th
+              class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of propertyList;let i=index;">
+            <td class="px-4 py-3">{{list.name}}</td>
+            <td class="px-4 py-3">{{list.size}}</td>
+            <td class="px-4 py-3">{{list.description}}</td>
+            <td class="w-10 text-center">
+              <label class="inline-flex items-center">
+                <mat-icon (click)="remove(i)"
+                class="hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-opacity-50 rounded"
+                >delete</mat-icon>
+                <span class="ml-2"></span>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex pl-4 mt-4 w-full mx-auto">
+      <button mat-dialog-close
+        class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Close</button>
+    </div>
+  </div>
+</section>
