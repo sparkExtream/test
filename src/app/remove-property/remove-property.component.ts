@@ -7,7 +7,7 @@ import { PropertyListService } from '../property-list.service';
   styleUrls: ['./remove-property.component.scss'],
 })
 export class RemovePropertyComponent implements OnInit {
-  propertyList = [];
+  propertyList = {};
 
   constructor(public propertyListService: PropertyListService) {
     this.propertyList = propertyListService.propertyList;
@@ -15,7 +15,9 @@ export class RemovePropertyComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  remove = (index) => {
-    this.propertyList.splice(index, 1);
+  remove = (property) => {
+    this.propertyListService.deleteProperty(property.key).subscribe(() => {
+      delete this.propertyList[property.key];
+    });
   };
 }

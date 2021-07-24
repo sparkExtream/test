@@ -1,40 +1,51 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PropertyListService {
-  constructor() {}
-  propertyList = [
-    {
-      name: 'Villa 1',
-      description: '5 bed rooms and 2 pool.',
-      size: '100m X 100m',
-    },
-    {
-      name: 'Villa 2',
-      description: '3 bed rooms and 1 pool.',
-      size: '50m X 100m',
-    },
-    {
-      name: 'Villa 3',
-      description: '9 bed rooms and 3 pool.',
-      size: '200m X 100m',
-    },
-    {
-      name: 'Villa 4',
-      description: '25 bed rooms and 4 pool.',
-      size: '500m X 100m',
-    },
-    {
-      name: 'Villa 5',
-      description: '2 bed rooms and 1 pool.',
-      size: '50m X 50m',
-    },
-    {
-      name: 'Villa 6',
-      description: '1 bed rooms and 1 pool.',
-      size: '40m X 40m',
-    },
-  ];
+  constructor(private http: HttpClient) {
+    this.getAllProperty();
+  }
+
+  propertyList = {};
+  private newEvent = new Subject();
+
+  createNewProperty = (property) => {
+    this.http
+      .post(environment.firebaseApi + 'property.json', property)
+      .subscribe((data) => {
+        console.log(data);
+        console.log(JSON.stringify(data, null, 2));
+        let newObj = {};
+        newObj[data['name']] = property;
+        let newPro = { ...this.propertyList, ...newObj };
+        this.propertyList = newPro;
+        this.newEvent.next(this.propertyList);
+      });
+  };
+
+  getAllProperty = () => {
+    return new Promise((resolve) => {
+      this.http
+        .get(environment.firebaseApi + 'property.json')
+        .subscribe((data) => {
+          this.propertyList = data;
+          resolve(true);
+        });
+    });
+  };
+
+  deleteProperty = (id) => {
+    return this.http.delete(
+      environment.firebaseApi +'property' + '/' + id + '.json'
+    );
+  };
+
+  propertyLisnner = () => {
+    return this.newEvent.asObservable();
+  };
 }

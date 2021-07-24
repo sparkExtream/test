@@ -19,13 +19,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let list of propertyList;let i=index;">
-            <td class="px-4 py-3">{{list.name}}</td>
-            <td class="px-4 py-3">{{list.size}}</td>
-            <td class="px-4 py-3">{{list.description}}</td>
+          <tr *ngFor="let list of propertyList | keyvalue;let i=index;">
+            <td class="px-4 py-3">{{list.value.name}}</td>
+            <td class="px-4 py-3">{{list.value.size}}</td>
+            <td class="px-4 py-3">{{list.value.description}}</td>
             <td class="w-10 text-center">
               <label class="inline-flex items-center">
-                <mat-icon (click)="remove(i)"
+                <mat-icon (click)="remove(list)"
                 class="hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-opacity-50 rounded"
                 >delete</mat-icon>
                 <span class="ml-2"></span>

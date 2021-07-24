@@ -22,7 +22,7 @@ export class AddPropertyComponent implements OnInit {
       size: form.value.size,
       description: form.value.description,
     };
-    this.propertyListService.propertyList.push(propertyData);
+    this.propertyListService.createNewProperty(propertyData);
     this.dialogRef.close();
   };
 }

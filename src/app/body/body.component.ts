@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PropertyListService } from '../property-list.service';
 
 @Component({
@@ -6,12 +7,30 @@ import { PropertyListService } from '../property-list.service';
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss'],
 })
-export class BodyComponent implements OnInit {
-  propertyList = [];
+export class BodyComponent implements OnInit, OnDestroy {
+  propertyList = {};
+  private propertySub: Subscription;
 
-  constructor(public propertyListService: PropertyListService) {
-    this.propertyList = propertyListService.propertyList;
+  constructor(public propertyListService: PropertyListService) {}
+
+  ngOnInit(): void {
+    this.getAllData();
   }
 
-  ngOnInit(): void {}
+  getAllData = () => {
+    this.propertyListService.getAllProperty().then((res) => {
+      if (res) {
+        this.propertyList = this.propertyListService.propertyList;
+        this.propertySub = this.propertyListService.propertyLisnner().subscribe(
+          (propertyList) => {
+            this.propertyList = propertyList;
+          }
+        );
+      }
+    });
+  };
+
+  ngOnDestroy(){
+    this.propertySub.unsubscribe();
+  }
 }

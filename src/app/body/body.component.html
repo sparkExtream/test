@@ -1,18 +1,20 @@
 <section class="text-gray-600 body-font">
   <div class="container px-5 mx-auto">
     <div class="flex flex-wrap -m-4">
-      <ng-container *ngFor="let list of propertyList">
-        <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-          <a class="block relative h-48 rounded overflow-hidden">
-            <img alt="ecommerce" class="object-cover object-center w-full h-full block"
-              src="assets/property-icons/villa.jpg">
-          </a>
-          <div class="mt-4">
-            <h2 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{list.name}}</h2>
-            <h3 class="text-gray-900 title-font text-lg font-medium">{{list.description}}</h3>
-            <p class="mt-1">{{list.size}}</p>
+      <ng-container *ngIf="(propertyList | json) != '{}'">
+        <ng-container *ngFor="let list of propertyList | keyvalue">
+          <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
+            <a class="block relative h-48 rounded overflow-hidden">
+              <img alt="ecommerce" class="object-cover object-center w-full h-full block"
+                src="assets/property-icons/villa.jpg">
+            </a>
+            <div class="mt-4">
+              <h2 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{list.value.name}}</h2>
+              <h3 class="text-gray-900 title-font text-lg font-medium">{{list.value.description}}</h3>
+              <p class="mt-1">{{list.value.size}}</p>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </ng-container>
     </div>
   </div>
