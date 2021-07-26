@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseApi: 'https://propertymanagement-1b90a-default-rtdb.asia-southeast1.firebasedatabase.app/'
+  firebaseApi: 'enter your firebase url here'
 };
 
 /*
